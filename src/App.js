@@ -1,4 +1,7 @@
 import React from "react";
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
+import { selectCollectionsForPages } from "./Redux/shop/shopSelector";
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,6 +12,8 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { LOAD_PRODUCTS } from "./GraphQL/Queries";
 import ShopPage from "./Pages/ShopPage/ShopPage.jsx";
+import { Route, Switch } from "react-router";
+import { updateCollections } from "./Redux/shop/shopActions";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -34,16 +39,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      data: [],
       error: "",
     };
   }
   componentDidMount() {
+    const { updateCollections } = this.props;
+
     const fetchDataAsync = async (params) => {
       try {
         this.setState({ ...this.state, isFetching: true });
         const response = await client.query({ query: params });
-        this.setState({ data: response.data.categories, isLoading: false });
+        updateCollections(response.data.categories);
+        this.setState({ isLoading: false });
         console.log(response.data.categories);
       } catch (error) {
         console.log(error);
@@ -55,16 +62,25 @@ class App extends React.Component {
 
     fetchDataAsync(LOAD_PRODUCTS);
   }
-
   render() {
-    const { data, isLoading, error } = this.state;
-    console.log(data);
     return (
       <ApolloProvider client={client}>
-        <ShopPage data={data} isLoading={isLoading} error={error} />
+        <Switch>
+          <Route exact path="/shop">
+            <ShopPage />
+          </Route>
+        </Switch>
       </ApolloProvider>
     );
   }
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  productsArray: selectCollectionsForPages,
+});
+const mapDispatchToProps = (dispatch) => ({
+  updateCollections: (collectionsMap) =>
+    dispatch(updateCollections(collectionsMap)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
