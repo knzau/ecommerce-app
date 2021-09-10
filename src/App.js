@@ -1,7 +1,7 @@
 import React from "react";
-import { createStructuredSelector } from "reselect";
+
 import { connect } from "react-redux";
-import { selectCollectionsForPages } from "./Redux/shop/shopSelector";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,9 +11,12 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { LOAD_PRODUCTS } from "./GraphQL/Queries";
-import ShopPage from "./Pages/ShopPage/ShopPage.jsx";
-import { Route, Switch } from "react-router";
+
+import ShopPage from "./Pages/ShopPage/ShopPage";
+
+import { Route, Switch, Redirect } from "react-router";
 import { updateCollections } from "./Redux/shop/shopActions";
+import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -40,47 +43,60 @@ class App extends React.Component {
     this.state = {
       isLoading: true,
       error: "",
+      data: null,
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ isLoading: true });
     const { updateCollections } = this.props;
 
-    const fetchDataAsync = async (params) => {
-      try {
-        this.setState({ ...this.state, isFetching: true });
-        const response = await client.query({ query: params });
-        updateCollections(response.data.categories);
-        this.setState({ isLoading: false });
-        console.log(response.data.categories);
-      } catch (error) {
-        console.log(error);
-        this.setState({ error: error, isLoading: false });
-      } finally {
-        this.setState({ isLoading: false });
-      }
-    };
-
-    fetchDataAsync(LOAD_PRODUCTS);
+    try {
+      const response = await client.query({ query: LOAD_PRODUCTS });
+      updateCollections(response.data.categories);
+      // this.setState({ data: response.data.categories, isLoading: false });
+      console.log(response.data);
+    } catch (error) {
+      this.setState({ error: error, isLoading: false });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
+
   render() {
+    console.log(this.state.data);
+
+    const { isLoading, error } = this.state;
+
     return (
       <ApolloProvider client={client}>
         <Switch>
-          <Route exact path="/shop">
-            <ShopPage />
-          </Route>
+          <Route
+            exact
+            path="/"
+            render={(props) =>
+              isLoading ? <Redirect to="/shop" /> : <LoadingSpinner />
+            }
+          />
+          <Route
+            path="/shop"
+            render={(props) => (
+              <ShopPage
+                isLoading={isLoading}
+                error={error}
+                data={this.state.data}
+                {...props}
+              />
+            )}
+          />
         </Switch>
       </ApolloProvider>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  productsArray: selectCollectionsForPages,
-});
 const mapDispatchToProps = (dispatch) => ({
   updateCollections: (collectionsMap) =>
     dispatch(updateCollections(collectionsMap)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
