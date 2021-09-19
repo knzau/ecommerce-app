@@ -1,19 +1,30 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { selectCategory } from "../../Redux/shop/shopSelector";
 import ProductItem from "../../Components/ProductItem/ProductItem.jsx";
 
 class CategoryCollection extends Component {
   render() {
-    const { products } = this.props;
-    console.log(products);
+    const { categorySelect, match, categories } = this.props;
+
+    console.log(categorySelect);
+    console.log(categories);
+    console.log(match);
 
     return (
       <div className="category-collection">
-        {products.map((product) => (
-          <ProductItem key={products.id} product={product} />
+        <h1> Category collection</h1>
+
+        {categorySelect?.products.map((product) => (
+          <ProductItem key={product.id} product={product} />
         ))}
       </div>
     );
   }
 }
 
-export default CategoryCollection;
+const mapStateToProps = (state, ownProps) => ({
+  categorySelect: selectCategory(ownProps.match.params.categoryId)(state),
+});
+
+export default connect(mapStateToProps)(CategoryCollection);

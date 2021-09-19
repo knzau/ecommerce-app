@@ -1,34 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import CategoryCollection from "../../Components/CategoryCollection/CategoryCollection";
-import ProductItem from "../../Components/ProductItem/ProductItem";
 import { selectCategory } from "../../Redux/shop/shopSelector";
+import ProductItem from "../../Components/ProductItem/ProductItem";
 
 class CategoryPage extends Component {
   render() {
-    const { category } = this.props;
+    const { categorySelect, match, categories } = this.props;
 
-    console.log(category);
-    const { match } = this.props;
-    console.log(match.params);
+    console.log(categorySelect);
 
-    return category ? (
-      <div className="category-page">
-        <h3>{category.name}</h3>
-        <CategoryCollection products={category.products} />
+    console.log(match);
 
-        <h2>Category Page</h2>
-      </div>
-    ) : (
-      <div>
-        <span>Products not found</span>
+    console.log(categories?.map((category) => category.name));
+
+    return (
+      <div className="category-collection">
+        <h1> Category collection</h1>
+        <h3>{categorySelect?.name}</h3>
+
+        {categorySelect?.products.map((product, index) => (
+          <ProductItem key={index} product={product} />
+        ))}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  category: selectCategory(ownProps.match.params.categoryId)(state),
+  categorySelect: selectCategory(ownProps.match.params.categoryId)(state),
 });
 
 export default connect(mapStateToProps)(CategoryPage);

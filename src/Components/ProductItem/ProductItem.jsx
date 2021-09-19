@@ -4,12 +4,12 @@ import parse from "html-react-parser";
 
 class ProductItem extends Component {
   render() {
-    const { product } = this.props;
+    const { product, handleClick, current } = this.props;
+
     console.log(product);
     return (
       <Wrapper>
-        <h1>{product.category}</h1>
-        <h1>{product.name}</h1>
+        <h1 onClick={handleClick}>{product.name}</h1>
         {parse(product.description)}
       </Wrapper>
     );

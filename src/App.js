@@ -14,9 +14,11 @@ import { LOAD_PRODUCTS } from "./GraphQL/Queries";
 
 import ShopPage from "./Pages/ShopPage/ShopPage";
 
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch, Redirect, withRouter } from "react-router";
 import { updateCollections } from "./Redux/shop/shopActions";
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
+import { selectCategories } from "./Redux/shop/shopSelector";
+import ProductListingPage from "./Pages/ProductListingPage/ProductListingPage";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -44,8 +46,15 @@ class App extends React.Component {
       isLoading: true,
       error: "",
       data: null,
+      isToggleOn: true,
     };
   }
+
+  handleClick = (e) => {
+    this.setState((prevState) => ({ isToggleOn: !prevState.isToggleOn }));
+    console.log("clicked!!");
+  };
+
   async componentDidMount() {
     this.setState({ isLoading: true });
     const { updateCollections } = this.props;
@@ -53,7 +62,7 @@ class App extends React.Component {
     try {
       const response = await client.query({ query: LOAD_PRODUCTS });
       updateCollections(response.data.categories);
-      // this.setState({ data: response.data.categories, isLoading: false });
+      this.setState({ data: response.data.categories, isLoading: false });
       console.log(response.data);
     } catch (error) {
       this.setState({ error: error, isLoading: false });
@@ -63,31 +72,17 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.data);
+    const { categories, match } = this.props;
+    const { data, isToggleOn } = this.state;
 
     const { isLoading, error } = this.state;
+    console.log(categories?.map((category) => Object.keys(category)));
 
     return (
       <ApolloProvider client={client}>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={(props) =>
-              isLoading ? <Redirect to="/shop" /> : <LoadingSpinner />
-            }
-          />
-          <Route
-            path="/shop"
-            render={(props) => (
-              <ShopPage
-                isLoading={isLoading}
-                error={error}
-                data={this.state.data}
-                {...props}
-              />
-            )}
-          />
+          <Route path="/shop" render={(props) => <ShopPage {...props} />} />
+          <Redirect from="/" to="/shop/0" />
         </Switch>
       </ApolloProvider>
     );
@@ -99,4 +94,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(updateCollections(collectionsMap)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+const mapStateToProps = (state, ownProps) => ({
+  categories: selectCategories(state),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

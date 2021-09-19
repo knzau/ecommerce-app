@@ -1,32 +1,68 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Route } from "react-router-dom";
+import { Route, Link, Redirect } from "react-router-dom";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
-import { selectCategoryId } from "../../Redux/shop/shopSelector";
+import {
+  selectCategories,
+  selectCategoryId,
+} from "../../Redux/shop/shopSelector";
 import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import CategoryPage from "../CategoryPage/CategoryPage";
 
 const ProductListingPageWithSpinner = LoadingSpinner(ProductListingPage);
 
 class ShopPage extends Component {
-  render() {
-    // const { products, name } = this.props.collection;
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedCategoryName: "",
+      categoriesStateData: "",
+    };
+  }
 
-    const { isLoading, match } = this.props;
+  async componentDidMount() {
+    if (this.props.categories) {
+      this.setState({ categoriesStateData: this.props.categories });
+    }
+  }
+
+  render() {
+    const initialCategoryName = this.props.categories?.map(
+      (category) => category.name
+    )[0];
+
+    const { isLoading, match, categories } = this.props;
 
     console.log(match.path);
+    console.log(categories);
+
+    console.log(this.state.selectedCategoryName);
+
     return (
       <div className="shop-page">
-        <h1>Shop page</h1>
+        {categories?.map((category, index) => (
+          <li className="category-link" key={index}>
+            <Link to={`${match.path}/${category.name}`}>{category.name}</Link>
+          </li>
+        ))}
+        {
+          <Route
+            path={`${match.path}/:categoryId`}
+            render={(props) => (
+              <CategoryPage categories={categories} {...props} />
+            )}
+          />
+        }
 
-        <Route
-          path={`${match.path}/:categoryId`}
-          render={(props) => <CategoryPage {...props} />}
-        />
+        {<Redirect to={`${match.path}/${initialCategoryName}`} />}
       </div>
     );
   }
 }
 
-export default ShopPage;
+const mapStateToProps = (state) => ({
+  categories: selectCategories(state),
+});
+
+export default connect(mapStateToProps)(ShopPage);

@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import memoize from "lodash.memoize";
+import { findProductId } from "./shopUtils";
 
 const selectShop = (state) => state.shop;
 
@@ -13,8 +14,11 @@ export const selectCategoryId = createSelector(
   (categories) => Object.keys(categories)
 );
 
-export const selectCategory = memoize((collectionUrlParam) =>
+export const selectCategory = memoize((categoryUrlParam) =>
   createSelector([selectCategories], (categories) =>
-    categories?.find((collection) => collection.name === collectionUrlParam)
+    categories?.find(
+      (category) =>
+        category.name.includes(categoryUrlParam) || categoryUrlParam === 0
+    )
   )
 );
