@@ -22,3 +22,8 @@ export const selectCategory = memoize((categoryUrlParam) =>
     )
   )
 );
+
+export const selectCurrencies = createSelector(
+  [selectShop],
+  (shop) => shop.currencies
+);

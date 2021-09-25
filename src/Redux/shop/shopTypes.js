@@ -1,5 +1,7 @@
 const ShopActionTypes = {
   UPDATE_COLLECTIONS: "UPDATE_COLLECTIONS",
+  UPDATE_CURRENCIES: "UPDATE_CURRENCIES",
+  SET_CURRENCY: "SET_CURRENCY,",
 };
 
 export default ShopActionTypes;

@@ -1,7 +1,8 @@
 import React from "react";
-
 import { connect } from "react-redux";
+import { Route, Switch, Redirect, withRouter } from "react-router";
 
+//Apollo Libraries
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,15 +11,16 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { LOAD_PRODUCTS } from "./GraphQL/Queries";
 
-import ShopPage from "./Pages/ShopPage/ShopPage";
-
-import { Route, Switch, Redirect, withRouter } from "react-router";
-import { updateCollections } from "./Redux/shop/shopActions";
-import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
+import { updateCollections, updateCurrencies } from "./Redux/shop/shopActions";
+import { LOAD_PRODUCTS_AND_CURRENCIES } from "./GraphQL/Queries";
 import { selectCategories } from "./Redux/shop/shopSelector";
-import ProductListingPage from "./Pages/ProductListingPage/ProductListingPage";
+import ShopPage from "./Pages/ShopPage/ShopPage";
+import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage";
+import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
+
+//Global CSS Styles
+import GlobalStyles from "./GlobalStyles";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -39,6 +41,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const ShopPageWithSpinner = LoadingSpinner(ShopPage);
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -57,12 +61,15 @@ class App extends React.Component {
 
   async componentDidMount() {
     this.setState({ isLoading: true });
-    const { updateCollections } = this.props;
+    const { updateCollections, updateCurrencies } = this.props;
 
     try {
-      const response = await client.query({ query: LOAD_PRODUCTS });
+      const response = await client.query({
+        query: LOAD_PRODUCTS_AND_CURRENCIES,
+      });
       updateCollections(response.data.categories);
-      this.setState({ data: response.data.categories, isLoading: false });
+      updateCurrencies(response.data.currencies);
+      this.setState({ isLoading: false });
       console.log(response.data);
     } catch (error) {
       this.setState({ error: error, isLoading: false });
@@ -73,25 +80,36 @@ class App extends React.Component {
 
   render() {
     const { categories, match } = this.props;
-    const { data, isToggleOn } = this.state;
-
     const { isLoading, error } = this.state;
-    console.log(categories?.map((category) => Object.keys(category)));
+    console.log(categories);
 
-    return (
-      <ApolloProvider client={client}>
-        <Switch>
-          <Route path="/shop" render={(props) => <ShopPage {...props} />} />
-          <Redirect from="/" to="/shop/0" />
-        </Switch>
-      </ApolloProvider>
-    );
+    if (error) {
+      <p>Error! {error}</p>;
+    } else
+      return (
+        <ApolloProvider client={client}>
+          <GlobalStyles />
+
+          <Switch>
+            <Route
+              path="/shop"
+              render={(props) => (
+                <ShopPageWithSpinner {...props} isLoading={isLoading} />
+              )}
+            />
+
+            <Redirect from="/" to="/shop/" />
+          </Switch>
+        </ApolloProvider>
+      );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   updateCollections: (collectionsMap) =>
     dispatch(updateCollections(collectionsMap)),
+  updateCurrencies: (currenciesData) =>
+    dispatch(updateCurrencies(currenciesData)),
 });
 
 const mapStateToProps = (state, ownProps) => ({
