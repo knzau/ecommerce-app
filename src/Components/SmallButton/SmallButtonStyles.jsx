@@ -1,8 +1,34 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const SmallButtonContainer = styled.button`
+const BigSquareStyles = css`
   width: 6.3rem;
   height: 4.5rem;
+
+  &:hover {
+    background-color: var(--c-primary-dark);
+    color: white;
+    border: none;
+  }
+`;
+
+const SmallSquareStyles = css`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const getButtonStyles = (props) => {
+  if (props.BigSquare) {
+    return BigSquareStyles;
+  } else if (props.SmallSquare) {
+    return SmallSquareStyles;
+  }
+};
+
+export const SmallButtonContainer = styled.div`
   letter-spacing: 0px;
   text-align: center;
   font-size: 1.6rem;
@@ -19,9 +45,6 @@ export const SmallButtonContainer = styled.button`
   align-items: center;
   outline: none;
   text-decoration: none;
-  &:hover {
-    background-color: var(--c-primary-dark);
-    color: white;
-    border: none;
-  }
+
+  ${getButtonStyles}
 `;

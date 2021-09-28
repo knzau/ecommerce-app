@@ -12,15 +12,17 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
-import { updateCollections, updateCurrencies } from "./Redux/shop/shopActions";
+import { updateCollections } from "./Redux/shop/shopActions";
+import { updateCurrencies } from "./Redux/currency/currencyActions";
 import { LOAD_PRODUCTS_AND_CURRENCIES } from "./GraphQL/Queries";
 import { selectCategories } from "./Redux/shop/shopSelector";
 import ShopPage from "./Pages/ShopPage/ShopPage";
-import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage";
+import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage.jsx";
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 
 //Global CSS Styles
 import GlobalStyles from "./GlobalStyles";
+import CartPage from "./Pages/CartPage/CartPage";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -54,11 +56,6 @@ class App extends React.Component {
     };
   }
 
-  handleClick = (e) => {
-    this.setState((prevState) => ({ isToggleOn: !prevState.isToggleOn }));
-    console.log("clicked!!");
-  };
-
   async componentDidMount() {
     this.setState({ isLoading: true });
     const { updateCollections, updateCurrencies } = this.props;
@@ -79,26 +76,25 @@ class App extends React.Component {
   }
 
   render() {
-    const { categories, match } = this.props;
     const { isLoading, error } = this.state;
-    console.log(categories);
+    const { match } = this.props;
 
     if (error) {
-      <p>Error! {error}</p>;
+      return <p>Error! {error}</p>;
     } else
       return (
         <ApolloProvider client={client}>
           <GlobalStyles />
-
           <Switch>
+            <Redirect exact from="/" to="/shop" />
             <Route
               path="/shop"
               render={(props) => (
-                <ShopPageWithSpinner {...props} isLoading={isLoading} />
+                <ShopPageWithSpinner isLoading={isLoading} {...props} />
               )}
             />
 
-            <Redirect from="/" to="/shop/" />
+            <Route exact path="/cart" render={(props) => <CartPage />} />
           </Switch>
         </ApolloProvider>
       );
@@ -112,7 +108,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(updateCurrencies(currenciesData)),
 });
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   categories: selectCategories(state),
 });
 

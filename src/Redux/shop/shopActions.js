@@ -5,12 +5,7 @@ export const updateCollections = (collectionsMap) => ({
   payload: collectionsMap,
 });
 
-export const updateCurrencies = (currenciesData) => ({
-  type: ShopActionTypes.UPDATE_CURRENCIES,
-  payload: currenciesData,
-});
-
-export const setCurrency = (selectedCurrency) => ({
-  type: ShopActionTypes.SET_CURRENCY,
-  payload: selectedCurrency,
+export const openProductDetail = (product) => ({
+  type: ShopActionTypes.OPEN_PRODUCT_DETAIL,
+  payload: product,
 });

@@ -3,6 +3,7 @@ import ShopActionTypes from "./shopTypes";
 const INITIAL_STATE = {
   categories: null,
   currencies: [],
+  productDetails: null,
 };
 
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -12,15 +13,10 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         ...state,
         categories: action.payload,
       };
-    case ShopActionTypes.UPDATE_CURRENCIES:
+    case ShopActionTypes.OPEN_PRODUCT_DETAIL:
       return {
         ...state,
-        currencies: action.payload,
-      };
-    case ShopActionTypes.SET_CURRENCY:
-      return {
-        ...state,
-        currency: action.payload,
+        productDetails: action.payload,
       };
     default:
       return state;

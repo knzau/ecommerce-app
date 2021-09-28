@@ -25,8 +25,8 @@ class CurrencySwitcher extends Component {
 
     return (
       <Select value={this.state.value} onChange={this.handleSelect}>
-        {this.props.currencies.map((currency) => (
-          <option value={currency}>
+        {this.props.currencies.map((currency, index) => (
+          <option value={currency} key={index}>
             {currency} {Parser(currencyIcons[currency])}
           </option>
         ))}
