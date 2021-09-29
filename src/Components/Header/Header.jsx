@@ -11,14 +11,7 @@ import { Wrapper, CategoriesMenu, LogoWrapper } from "./HeaderStyles";
 
 class Header extends Component {
   render() {
-    const {
-      currencies,
-      hidden,
-      categories,
-      match,
-      handleMenuClick,
-      currentCurrency,
-    } = this.props;
+    const { currencies, hidden, categories, currentCurrency } = this.props;
     return (
       <Wrapper>
         <CategoriesMenu>
@@ -26,9 +19,9 @@ class Header extends Component {
             <li
               className="category-link"
               key={index}
-              onClick={() => handleMenuClick(category.name)}
+              // onClick={() => handleMenuClick(category.name)}
             >
-              <Link to={`${match.path}/${category.name}`}>{category.name}</Link>
+              <Link to={`/shop/${category.name}`}>{category.name}</Link>
             </li>
           ))}
         </CategoriesMenu>

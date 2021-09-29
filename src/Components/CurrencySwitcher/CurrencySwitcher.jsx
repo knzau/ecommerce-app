@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { currencyIcons } from "../Utils";
-
 import { setCurrency } from "../../Redux/currency/currencyActions";
 import Parser from "html-react-parser";
+import { Wrapper } from "./CurrencySwitcherStyles";
 
 class CurrencySwitcher extends Component {
   constructor(props) {
@@ -22,15 +21,21 @@ class CurrencySwitcher extends Component {
 
   render() {
     console.log(this.props);
-
+    console.log(this.state.value);
+    const defaultCurrency = Parser(
+      `${currencyIcons[this.state.value.toUpperCase()]}`
+    );
+    console.log(defaultCurrency);
     return (
-      <Select value={this.state.value} onChange={this.handleSelect}>
-        {this.props.currencies.map((currency, index) => (
-          <option value={currency} key={index}>
-            {currency} {Parser(currencyIcons[currency])}
-          </option>
-        ))}
-      </Select>
+      <Wrapper>
+        <select value={defaultCurrency} onChange={this.handleSelect}>
+          {this.props.currencies.map((currency, index) => (
+            <option value={currency} key={index}>
+              {currency} {Parser(currencyIcons[currency])}
+            </option>
+          ))}
+        </select>
+      </Wrapper>
     );
   }
 }
@@ -40,29 +45,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(CurrencySwitcher);
-
-const Select = styled.select`
-  background: var(--c-white);
-  border: none;
-  min-width: 114px;
-  text-align: center;
-  font-size: 18px;
-  cursor: pointer;
-  outline: none;
-
-  option {
-    color: black;
-    background: white;
-    width: 100%;
-    font-size: 18px;
-    font-style: normal;
-    cursor: pointer;
-    font-weight: 500;
-    line-height: 29px;
-    letter-spacing: 0em;
-    text-align: center;
-    height: 39px;
-    padding: 5px 3px;
-    outline: none;
-  }
-`;

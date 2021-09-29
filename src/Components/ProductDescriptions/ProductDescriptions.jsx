@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Parse from "html-react-parser";
+import parse from "html-react-parser";
 import { addItem } from "../../Redux/cart/cartActions";
 import { selectCartItems } from "../../Redux/cart/cartSelector";
 import { SmallButtonContainer } from "../SmallButton/SmallButtonStyles";
-import { currencyIcons } from "../Utils";
+
 import CustomButton from "../CustomButton/CustomButton";
 import { DescriptionContainer } from "./ProductDescriptionsStyles";
 
@@ -15,16 +15,15 @@ class ProductDescriptions extends Component {
       attributeName,
       displaySizeValues,
       productPrice,
-      currentCurrency,
+      currencySign,
       addItem,
     } = this.props;
 
-    console.log(this.props.cartItems);
     return (
       <DescriptionContainer>
         <p className="product_brand">{productDetails.brand}</p>
         <p className="product_name">{productDetails.name}</p>
-        {attributeName[0] ? (
+        {attributeName.length ? (
           <p className="medium_header-size">{attributeName[0]}:</p>
         ) : null}
         <div className="size-container">
@@ -40,14 +39,14 @@ class ProductDescriptions extends Component {
         </div>
         <span className="medium_header-price">Price: </span>
         <h4 className="product-price">
-          {Parse(currencyIcons[currentCurrency])} {productPrice}
+          {parse(`${currencySign}`)} {productPrice}
         </h4>
         <CustomButton onClick={() => addItem(productDetails)}>
           Add to cart
         </CustomButton>
 
         <div className="product-description">
-          {Parse(`${productDetails.description}`)}
+          {parse(`${productDetails.description}`)}
         </div>
       </DescriptionContainer>
     );

@@ -12,12 +12,21 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
-import { updateCollections } from "./Redux/shop/shopActions";
+import {
+  updateCollections,
+  setCategoryMenu,
+  setCategorySlug,
+} from "./Redux/shop/shopActions";
 import { updateCurrencies } from "./Redux/currency/currencyActions";
+import { selectCartHidden } from "./Redux/cart/cartSelector";
+import { selectCurrencies } from "./Redux/currency/currencySelector";
 import { LOAD_PRODUCTS_AND_CURRENCIES } from "./GraphQL/Queries";
-import { selectCategories } from "./Redux/shop/shopSelector";
+import {
+  selectCategories,
+  selectInitialCategorySlug,
+} from "./Redux/shop/shopSelector";
+import Header from "./Components/Header/Header";
 import ShopPage from "./Pages/ShopPage/ShopPage";
-import ProductDescriptionPage from "./Pages/ProductDescriptionPage/ProductDescriptionPage.jsx";
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 
 //Global CSS Styles
@@ -52,13 +61,14 @@ class App extends React.Component {
       isLoading: true,
       error: "",
       data: null,
-      isToggleOn: true,
+      selectedCategoryName: "",
+      initialCategoryId: "",
     };
   }
 
   async componentDidMount() {
     this.setState({ isLoading: true });
-    const { updateCollections, updateCurrencies } = this.props;
+    const { updateCollections, updateCurrencies, setCategorySlug } = this.props;
 
     try {
       const response = await client.query({
@@ -66,6 +76,7 @@ class App extends React.Component {
       });
       updateCollections(response.data.categories);
       updateCurrencies(response.data.currencies);
+      setCategorySlug(response.data.categories);
       this.setState({ isLoading: false });
       console.log(response.data);
     } catch (error) {
@@ -75,9 +86,14 @@ class App extends React.Component {
     }
   }
 
+  handleMenuClick = (categoryName) => {
+    this.props.selectCategoryMenu(categoryName);
+  };
+
   render() {
-    const { isLoading, error } = this.state;
-    const { match } = this.props;
+    const { isLoading, error, selectedCategoryName } = this.state;
+    const { match, categories, hidden, currencies, initialCategoryId } =
+      this.props;
 
     if (error) {
       return <p>Error! {error}</p>;
@@ -85,6 +101,13 @@ class App extends React.Component {
       return (
         <ApolloProvider client={client}>
           <GlobalStyles />
+          <Header
+            categories={categories}
+            match={match}
+            hidden={hidden}
+            currencies={currencies}
+            handleMenuClick={this.handleMenuClick}
+          />
           <Switch>
             <Redirect exact from="/" to="/shop" />
             <Route
@@ -102,14 +125,18 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  updateCollections: (collectionsMap) =>
-    dispatch(updateCollections(collectionsMap)),
+  updateCollections: (categoriesMap) =>
+    dispatch(updateCollections(categoriesMap)),
   updateCurrencies: (currenciesData) =>
     dispatch(updateCurrencies(currenciesData)),
+  setCategorySlug: (categoriesMap) => dispatch(setCategorySlug(categoriesMap)),
+  selectCategoryMenu: (categoryName) => dispatch(setCategoryMenu(categoryName)),
 });
 
 const mapStateToProps = (state) => ({
   categories: selectCategories(state),
+  currencies: selectCurrencies(state),
+  hidden: selectCartHidden(state),
+  initialCategoryId: selectInitialCategorySlug(state),
 });
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

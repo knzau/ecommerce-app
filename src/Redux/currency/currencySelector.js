@@ -1,5 +1,5 @@
-import { createSelector } from "reselect";
 import memoize from "lodash.memoize";
+import { createSelector } from "reselect";
 
 const selectCurrency = (state) => state.currency;
 
@@ -13,12 +13,9 @@ export const selectCurrentCurrency = createSelector(
   (currency) => currency.selectedCurrency
 );
 
-export const selectProductPrice = memoize((product) =>
+export const selectProductPrice = memoize((prices) =>
   createSelector(
     [selectCurrentCurrency],
-    (currentCurrency) =>
-      product.prices.find(
-        (currencyType) => currencyType.currency === currentCurrency
-      ).amount
+    (currentCurrency) => prices.find((item) => item.currency === "USD").amount
   )
 );

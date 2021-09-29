@@ -18,7 +18,6 @@ class CartDropDown extends Component {
     const {
       cartItems,
       history,
-      dispatch,
       totalItems,
       toggleCartHidden,
       totalPrice,

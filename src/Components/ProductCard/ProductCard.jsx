@@ -1,35 +1,37 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import parse from "html-react-parser";
 import {
   selectCurrentCurrency,
   selectCurrencies,
-  selectProductPrice,
 } from "../../Redux/currency/currencySelector";
+
 import { currencyIcons } from "../Utils";
-import parse from "html-react-parser";
+import { productPrice } from "../../Redux/shop/shopUtils";
+
 import { openProductDetail } from "../../Redux/shop/shopActions";
 
 import { Wrapper } from "./ProductCardStyles";
 
 class ProductCard extends Component {
   render() {
-    const {
-      product,
-      match,
-      history,
-      currentCurrency,
-      productPrice,
-      setProductDetail,
-    } = this.props;
+    const { product, match, history, currentCurrency } = this.props;
+    console.log(product);
+    const price = productPrice(product, currentCurrency);
 
+    const currencySign = currencyIcons[`${currentCurrency.toUpperCase()}`];
+
+    console.log(productPrice);
+    console.log(currentCurrency);
+    console.log(currencyIcons[`${currentCurrency.toUpperCase()}`]);
     return (
       <Wrapper
         onClick={() => {
-          setProductDetail(product);
+          openProductDetail(product);
           history.push({
             pathname: `${match.url}/${product.id}`,
-            state: product,
+            state: { product: product, price: price },
           });
         }}
       >
@@ -39,7 +41,7 @@ class ProductCard extends Component {
         </div>
         <p className="product__name">{product.name}</p>
         <p className="product__price">
-          {parse(`${currencyIcons[currentCurrency]}`)} &nbsp; {productPrice}
+          {parse(`${currencySign}`)} &nbsp; {price}
         </p>
       </Wrapper>
     );
@@ -49,11 +51,10 @@ class ProductCard extends Component {
 const mapStateToProps = (state, ownProps) => ({
   currentCurrency: selectCurrentCurrency(state),
   currencies: selectCurrencies(state),
-  productPrice: selectProductPrice(ownProps.product)(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setProductDetail: (product) => dispatch(openProductDetail(product)),
+  openProductDetail: (product) => dispatch(openProductDetail(product)),
 });
 
 export default withRouter(

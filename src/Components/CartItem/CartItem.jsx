@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { selectProductPrice } from "../../Redux/currency/currencySelector";
 import { currencyIcons } from "../Utils";
 import Parse from "html-react-parser";
 import SmallButton from "../SmallButton/SmallButton";
@@ -14,7 +13,11 @@ const CartItem = ({ item, currentCurrency, price, addItem, removeItem }) => {
   const imageUrl = gallery[0];
   console.log(price);
   console.log(item);
+  const productPrice = item.prices?.find(
+    (item) => item.currency === currentCurrency
+  ).amount;
 
+  console.log(productPrice);
   return (
     <Wrapper>
       <div className="right_wrapper">
@@ -22,7 +25,7 @@ const CartItem = ({ item, currentCurrency, price, addItem, removeItem }) => {
         <span className="brand name">{name}</span>
         <span className="cart-price">
           {Parse(currencyIcons[currentCurrency])}
-          {price}
+          {productPrice}
         </span>
       </div>
       <div className="left_wrapper">
@@ -52,12 +55,8 @@ const CartItem = ({ item, currentCurrency, price, addItem, removeItem }) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  price: selectProductPrice(ownProps.item)(state),
-});
-
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
   removeItem: (item) => dispatch(removeItem(item)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
+export default connect(null, mapDispatchToProps)(CartItem);

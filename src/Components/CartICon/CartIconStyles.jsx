@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   position: relative;
   cursor: pointer;
+  display: flex;
   height: 3rem;
 
   .shopping-icon {
@@ -29,7 +30,7 @@ export const Wrapper = styled.div`
     background-color: var(--c-primary-dark);
     color: var(--c-white);
     position: absolute;
-    top: -1.2rem;
+    top: -0.5rem;
     right: -1rem;
     font-weight: 700;
     display: flex;

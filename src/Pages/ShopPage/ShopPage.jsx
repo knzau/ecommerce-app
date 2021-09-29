@@ -3,17 +3,17 @@ import { connect } from "react-redux";
 import { Route, withRouter, Redirect } from "react-router-dom";
 
 import CategoryPage from "../CategoryPage/CategoryPage";
+import CartPage from "../CartPage/CartPage";
 import NotFound from "../../Components/NotFound/NotFound";
 import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 import {
   selectCategories,
-  setinitialCategoryName,
+  selectInitialCategorySlug,
 } from "../../Redux/shop/shopSelector";
 import { selectCurrencies } from "../../Redux/currency/currencySelector";
 import { selectCartHidden } from "../../Redux/cart/cartSelector";
 
 import { Wrapper } from "./ShopPageStyles";
-
 import Header from "../../Components/Header/Header";
 
 class ShopPage extends Component {
@@ -26,38 +26,12 @@ class ShopPage extends Component {
     };
   }
 
-  async componentDidMount() {
-    const initialCategoryName = this.props.categories?.map(
-      (category) => category.name
-    )[0];
-
-    if (this.props.categories) {
-      this.setState({
-        categoriesStateData: this.props.categories,
-        initialCategoryId: initialCategoryName,
-      });
-    }
-  }
-  handleMenuClick = (categoryName) => {
-    this.setState({
-      selectedCategoryName: categoryName,
-      initialCategoryId: categoryName,
-    });
-  };
-
   render() {
-    const { match, categories, currencies, hidden } = this.props;
+    const { match, hidden, initialCategoryId } = this.props;
     console.log(this.state.initialCategoryId);
-    const { initialCategoryId } = this.state;
+
     return (
       <Wrapper>
-        <Header
-          categories={categories}
-          match={match}
-          hidden={hidden}
-          currencies={currencies}
-          handleMenuClick={this.handleMenuClick}
-        />
         {!hidden ? <div className="gray-container" /> : null}
 
         <Route
@@ -86,10 +60,10 @@ class ShopPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  firstCategory: setinitialCategoryName(state),
   categories: selectCategories(state),
   currencies: selectCurrencies(state),
   hidden: selectCartHidden(state),
+  initialCategoryId: selectInitialCategorySlug(state),
 });
 
 export default withRouter(connect(mapStateToProps)(ShopPage));

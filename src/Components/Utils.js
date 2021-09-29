@@ -6,3 +6,8 @@ export const currencyIcons = {
   AUD: "&#36;",
   RUB: "&#1088;",
 };
+
+export const displayAttrValues = (product) =>
+  product.attributes.map((attribute) =>
+    attribute.items.map((item) => item).map((item) => item.displayValue)
+  );
