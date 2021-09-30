@@ -25,6 +25,7 @@ import {
   selectCategories,
   selectInitialCategorySlug,
 } from "./Redux/shop/shopSelector";
+
 import Header from "./Components/Header/Header";
 import ShopPage from "./Pages/ShopPage/ShopPage";
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
@@ -78,7 +79,6 @@ class App extends React.Component {
       updateCurrencies(response.data.currencies);
       setCategorySlug(response.data.categories);
       this.setState({ isLoading: false });
-      console.log(response.data);
     } catch (error) {
       this.setState({ error: error, isLoading: false });
     } finally {
@@ -91,9 +91,8 @@ class App extends React.Component {
   };
 
   render() {
-    const { isLoading, error, selectedCategoryName } = this.state;
-    const { match, categories, hidden, currencies, initialCategoryId } =
-      this.props;
+    const { isLoading, error } = this.state;
+    const { match, categories, hidden, currencies } = this.props;
 
     if (error) {
       return <p>Error! {error}</p>;
