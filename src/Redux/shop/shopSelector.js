@@ -1,6 +1,5 @@
 import { createSelector } from "reselect";
 import memoize from "lodash.memoize";
-import { productPrice } from "../cart/cartUtils";
 
 const selectShop = (state) => state.shop;
 
@@ -14,11 +13,6 @@ export const selectInitialCategorySlug = createSelector(
   (shop) => shop.initialCategoryName
 );
 
-export const selectCategoryId = createSelector(
-  [selectCategories],
-  (categories) => Object.keys(categories)
-);
-
 export const selectCategory = memoize((categoryUrlParam) =>
   createSelector([selectCategories], (categories) =>
     categories?.find(
@@ -27,15 +21,9 @@ export const selectCategory = memoize((categoryUrlParam) =>
     )
   )
 );
-
 export const selectProducts = createSelector(
   [selectCategory],
   (category) => category.products
-);
-
-export const selectCurrencies = createSelector(
-  [selectShop],
-  (shop) => shop.currencies
 );
 
 export const selectProductDetails = createSelector(

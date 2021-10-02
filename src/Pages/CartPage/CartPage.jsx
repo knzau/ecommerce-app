@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectCartItems } from "../../Redux/cart/cartSelector";
-
-import styled from "styled-components";
-
 import CheckOutItem from "../../Components/CheckOutItem/CheckOutItem";
 import { selectCurrentCurrency } from "../../Redux/currency/currencySelector";
+
+import { Wrapper } from "./CartPageStyles";
 class CartPage extends Component {
   render() {
     const { cartItems, currentCurrency } = this.props;
@@ -31,22 +30,9 @@ class CartPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   cartItems: selectCartItems(state),
   currentCurrency: selectCurrentCurrency(state),
 });
 
 export default connect(mapStateToProps)(CartPage);
-
-const Wrapper = styled.div`
-  padding: 0 8.125%;
-  .page-header {
-    font-family: Raleway;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 40px;
-    text-transform: uppercase;
-    margin-top: 8rem;
-    margin-bottom: 6rem;
-  }
-`;

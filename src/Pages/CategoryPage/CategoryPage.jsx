@@ -7,7 +7,7 @@ import { Wrapper } from "./CategoryPageStyles";
 class CategoryPage extends Component {
   render() {
     const { categorySelect } = this.props;
-    console.log(categorySelect);
+
     return (
       <Wrapper>
         <h2>{categorySelect.name}</h2>

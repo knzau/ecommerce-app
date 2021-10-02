@@ -24,8 +24,6 @@ class CartDropDown extends Component {
       currentCurrency,
     } = this.props;
 
-    console.log(totalPrice);
-    console.log(currentCurrency);
     return (
       <Wrapper className="cart-dropdown">
         <h3 className="total-items">

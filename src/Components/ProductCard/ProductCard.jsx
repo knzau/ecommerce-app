@@ -17,14 +17,9 @@ import { Wrapper } from "./ProductCardStyles";
 class ProductCard extends Component {
   render() {
     const { product, match, history, currentCurrency } = this.props;
-    console.log(product);
     const price = productPrice(product, currentCurrency);
-
     const currencySign = currencyIcons[`${currentCurrency.toUpperCase()}`];
 
-    console.log(productPrice);
-    console.log(currentCurrency);
-    console.log(currencyIcons[`${currentCurrency.toUpperCase()}`]);
     return (
       <Wrapper
         onClick={() => {

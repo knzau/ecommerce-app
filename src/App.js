@@ -11,7 +11,9 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import { LOAD_PRODUCTS_AND_CURRENCIES } from "./GraphQL/Queries";
 
+//Redux files
 import {
   updateCollections,
   setCategoryMenu,
@@ -20,13 +22,12 @@ import {
 import { updateCurrencies } from "./Redux/currency/currencyActions";
 import { selectCartHidden } from "./Redux/cart/cartSelector";
 import { selectCurrencies } from "./Redux/currency/currencySelector";
-import { LOAD_PRODUCTS_AND_CURRENCIES } from "./GraphQL/Queries";
 import {
   selectCategories,
   selectInitialCategorySlug,
 } from "./Redux/shop/shopSelector";
 
-import Header from "./Components/Header/Header";
+import Header from "./Components/Header/Header.jsx";
 import ShopPage from "./Pages/ShopPage/ShopPage";
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 
@@ -53,17 +54,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const ShopPageWithSpinner = LoadingSpinner(ShopPage);
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
       error: "",
-      data: null,
-      selectedCategoryName: "",
-      initialCategoryId: "",
     };
   }
 
@@ -86,40 +82,32 @@ class App extends React.Component {
     }
   }
 
-  handleMenuClick = (categoryName) => {
-    this.props.selectCategoryMenu(categoryName);
-  };
-
   render() {
     const { isLoading, error } = this.state;
-    const { match, categories, hidden, currencies } = this.props;
+    const { categories, hidden, currencies } = this.props;
 
     if (error) {
       return <p>Error! {error}</p>;
-    } else
-      return (
-        <ApolloProvider client={client}>
-          <GlobalStyles />
-          <Header
-            categories={categories}
-            match={match}
-            hidden={hidden}
-            currencies={currencies}
-            handleMenuClick={this.handleMenuClick}
-          />
-          <Switch>
-            <Redirect exact from="/" to="/shop" />
-            <Route
-              path="/shop"
-              render={(props) => (
-                <ShopPageWithSpinner isLoading={isLoading} {...props} />
-              )}
-            />
+    }
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
+    return (
+      <ApolloProvider client={client}>
+        <GlobalStyles />
+        <Header
+          categories={categories}
+          hidden={hidden}
+          currencies={currencies}
+        />
+        <Switch>
+          <Redirect exact from="/" to="/shop" />
+          <Route path="/shop" render={(props) => <ShopPage {...props} />} />
 
-            <Route exact path="/cart" render={(props) => <CartPage />} />
-          </Switch>
-        </ApolloProvider>
-      );
+          <Route exact path="/cart" render={(props) => <CartPage />} />
+        </Switch>
+      </ApolloProvider>
+    );
   }
 }
 

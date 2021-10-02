@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { currencyIcons } from "../Utils";
 import { setCurrency } from "../../Redux/currency/currencyActions";
+import { selectCurrentCurrency } from "../../Redux/currency/currencySelector";
 import Parser from "html-react-parser";
 import { Wrapper } from "./CurrencySwitcherStyles";
 
@@ -20,15 +21,9 @@ class CurrencySwitcher extends Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state.value);
-    const defaultCurrency = Parser(
-      `${currencyIcons[this.state.value.toUpperCase()]}`
-    );
-    console.log(defaultCurrency);
     return (
       <Wrapper>
-        <select value={defaultCurrency} onChange={this.handleSelect}>
+        <select value={this.state.value} onChange={this.handleSelect}>
           {this.props.currencies.map((currency, index) => (
             <option value={currency} key={index}>
               {currency} {Parser(currencyIcons[currency])}
@@ -44,4 +39,8 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrency: (selectedCurrency) => dispatch(setCurrency(selectedCurrency)),
 });
 
-export default connect(null, mapDispatchToProps)(CurrencySwitcher);
+const mapStateToProps = (state) => ({
+  selectedCurrency: selectCurrentCurrency(state),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);

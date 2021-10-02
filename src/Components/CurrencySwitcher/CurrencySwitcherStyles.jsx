@@ -20,10 +20,12 @@ export const Wrapper = styled.div`
     min-width: 114px;
     text-align: center;
     font-size: 18px;
+    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
     cursor: pointer;
     position: relative;
     outline: none;
 
+    line-height: 1.1;
     background-image: url("${ArrowDown}");
     background-position: 85% 60%;
     background-repeat: no-repeat;
@@ -54,6 +56,9 @@ export const Wrapper = styled.div`
     justify-content: center;
     border: none;
     outline: none;
-    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  }
+
+  select::-ms-expand {
+    display: none;
   }
 `;

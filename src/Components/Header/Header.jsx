@@ -16,11 +16,7 @@ class Header extends Component {
       <Wrapper>
         <CategoriesMenu>
           {categories.map((category, index) => (
-            <li
-              className="category-link"
-              key={index}
-              // onClick={() => handleMenuClick(category.name)}
-            >
+            <li className="category-link" key={index}>
               <Link to={`/shop/${category.name}`}>{category.name}</Link>
             </li>
           ))}

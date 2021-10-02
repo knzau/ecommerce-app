@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Route, withRouter, Redirect } from "react-router-dom";
 
 import CategoryPage from "../CategoryPage/CategoryPage";
-import CartPage from "../CartPage/CartPage";
 import NotFound from "../../Components/NotFound/NotFound";
 import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 import {
@@ -14,7 +13,6 @@ import { selectCurrencies } from "../../Redux/currency/currencySelector";
 import { selectCartHidden } from "../../Redux/cart/cartSelector";
 
 import { Wrapper } from "./ShopPageStyles";
-import Header from "../../Components/Header/Header";
 
 class ShopPage extends Component {
   constructor(props) {
@@ -28,7 +26,6 @@ class ShopPage extends Component {
 
   render() {
     const { match, hidden, initialCategoryId } = this.props;
-    console.log(this.state.initialCategoryId);
 
     return (
       <Wrapper>

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+
+import { ImgWrapper } from "./ProductDetailsImagesStyles";
 
 class ProductDetailsImages extends Component {
   render() {
     const {
       handleOnMouseLeave,
       handleOnHover,
-      clickedProduct,
+      hoveredImage,
+      isHover,
       productDetails,
     } = this.props;
+
     return (
       <ImgWrapper>
         <div className="grid-images">
@@ -17,15 +20,15 @@ class ProductDetailsImages extends Component {
               className="product-img_wrap"
               key={index}
               onMouseOver={(e) => handleOnHover(e, index)}
-              onMouseLeave={(e) => handleOnMouseLeave(e, index)}
+              onMouseOut={(e) => handleOnMouseLeave(e, index)}
             >
               <img src={item} alt="products" />
             </div>
           ))}
         </div>
         <div className="product-image__main">
-          {clickedProduct ? (
-            <img src={`${clickedProduct}`} alt="products" />
+          {isHover ? (
+            <img src={`${hoveredImage}`} alt="products" />
           ) : (
             <img src={productDetails.gallery[0]} alt="products" />
           )}
@@ -36,35 +39,3 @@ class ProductDetailsImages extends Component {
 }
 
 export default ProductDetailsImages;
-
-const ImgWrapper = styled.div`
-  display: flex;
-
-  .grid-images {
-    display: flex;
-    flex-direction: column;
-    margin-right: 4rem;
-
-    .product-img_wrap {
-      margin-bottom: 3.2rem;
-      cursor: pointer;
-
-      img {
-        width: 80px;
-        height: 79px;
-        object-fit: contain;
-      }
-    }
-  }
-  .product-image__main {
-    width: 100%;
-
-    background-size: cover;
-
-    img {
-      max-height: 511px;
-      max-width: 610px;
-      object-fit: contain;
-    }
-  }
-`;

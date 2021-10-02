@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { selectProductDetails } from "../../Redux/shop/shopSelector";
-import {
-  selectCurrentCurrency,
-  selectProductPrice,
-} from "../../Redux/currency/currencySelector";
+import { selectCurrentCurrency } from "../../Redux/currency/currencySelector";
 import ProductDetailsImages from "../../Components/ProductDetailsImages/ProductDetailsImages";
 import ProductDescriptions from "../../Components/ProductDescriptions/ProductDescriptions";
 import { currencyIcons } from "../../Components/Utils";
-import { Wrapper } from "./ProductDescriptionPageStyles";
 import { productPrice } from "../../Redux/shop/shopUtils";
+
+import { Wrapper } from "./ProductDescriptionPageStyles";
 
 class ProductDescriptionPage extends Component {
   constructor(props) {
@@ -18,27 +15,25 @@ class ProductDescriptionPage extends Component {
 
     this.state = {
       isClicked: false,
-      clickedProduct: "",
+      hoveredImage: "",
       isHovered: false,
     };
   }
 
   render() {
-    const { productDetails, currentCurrency } = this.props;
-
+    const { currentCurrency } = this.props;
     const product = this.props.location.state.product;
-    console.log(product);
-
     const currencySign = currencyIcons[`${currentCurrency.toUpperCase()}`];
+    const price = productPrice(product, currentCurrency);
+
+    const attributeName = product.attributes.map((attribute) => attribute.name);
 
     const handleOnHover = (e, index) => {
-      const selectedProductImage = productDetails?.gallery[index];
-      this.setState({ clickedProduct: selectedProductImage });
-      this.setState({ isHovered: true });
+      const targetImageUrl = product.gallery[index];
+      this.setState({ isHovered: true, hoveredImage: targetImageUrl });
     };
 
     const handleOnMouseLeave = (e, index) => {
-      this.setState({ clickedProduct: "" });
       this.setState({ isHovered: false });
     };
 
@@ -46,19 +41,14 @@ class ProductDescriptionPage extends Component {
       attribute.items.map((item) => item).map((item) => item.displayValue)
     );
 
-    const price = productPrice(productDetails, currentCurrency);
-
-    const attributeName = product.attributes.map((attribute) => attribute.name);
-    console.log(attributeName);
-    console.log(price);
-
     return (
       <Wrapper>
         <ProductDetailsImages
           productDetails={product}
           handleOnMouseLeave={handleOnMouseLeave}
-          clickedProduct={this.state.clickedProduct}
+          hoveredImage={this.state.hoveredImage}
           handleOnHover={handleOnHover}
+          isHover={this.state.isHovered}
         />
         <ProductDescriptions
           productDetails={product}
@@ -73,9 +63,7 @@ class ProductDescriptionPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  productDetails: selectProductDetails(state),
-  // price: selectProductPrice(ownProps.productDetails.prices)(state),
+const mapStateToProps = (state) => ({
   currentCurrency: selectCurrentCurrency(state),
 });
 
