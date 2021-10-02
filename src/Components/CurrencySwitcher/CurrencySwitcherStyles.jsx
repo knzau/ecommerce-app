@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     min-width: 114px;
     text-align: center;
     font-size: 18px;
-    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+
     cursor: pointer;
     position: relative;
     outline: none;
@@ -35,7 +35,7 @@ export const Wrapper = styled.div`
   }
   option {
     color: var(--c-primary-dark);
-    background-color: rgba(255, 255, 255, 1);
+
     width: 100%;
     font-size: 18px;
     font-style: normal;
@@ -51,7 +51,6 @@ export const Wrapper = styled.div`
   }
 
   select option {
-    background: rgba(255, 255, 255, 1);
     display: flex;
     justify-content: center;
     border: none;
