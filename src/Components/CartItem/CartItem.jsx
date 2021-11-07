@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addItem, removeItem } from "../../Redux/cart/cartActions";
+import { selectCurrentCurrency } from "../../Redux/currency/currencySelector";
 import { currencyIcons } from "../Utils";
 import Parse from "html-react-parser";
 import SmallButton from "../SmallButton/SmallButton";
@@ -9,11 +10,12 @@ import { Wrapper } from "./CartItemStyles";
 
 class CartItem extends Component {
   render() {
-    const { item, currentCurrency, addItem, removeItem } = this.props;
+    const { item, currentCurrency, addItem, removeItem, selectedCurrency } =
+      this.props;
     const { gallery, brand, name, quantity } = item;
     const imageUrl = gallery[0];
-    const productPrice = item.prices?.find(
-      (item) => item.currency === currentCurrency
+    const productPrice = item.prices?.find((item) =>
+      item.currency.includes(selectedCurrency)
     ).amount;
     return (
       <Wrapper>
@@ -21,7 +23,7 @@ class CartItem extends Component {
           <span className="name">{brand}</span>
           <span className="brand name">{name}</span>
           <span className="cart-price">
-            {Parse(currencyIcons[currentCurrency])}
+            {Parse(currencyIcons[currentCurrency])}&nbsp;
             {productPrice}
           </span>
         </div>
@@ -56,4 +58,8 @@ const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
   removeItem: (item) => dispatch(removeItem(item)),
 });
-export default connect(null, mapDispatchToProps)(CartItem);
+
+const mapStateToProps = (state) => ({
+  selectedCurrency: selectCurrentCurrency(state),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

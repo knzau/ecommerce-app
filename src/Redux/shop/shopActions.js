@@ -24,3 +24,8 @@ export const setCategoryMenu = (categoryName) => ({
   type: ShopActionTypes.SET_CATEGORY_MENU,
   payload: categoryName,
 });
+
+export const setSelectProduct = (product) => ({
+  type: ShopActionTypes.SET_SELECT_PRODUCT,
+  payload: product,
+});

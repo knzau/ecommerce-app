@@ -41,6 +41,8 @@ class ProductDescriptionPage extends Component {
       attribute.items.map((item) => item).map((item) => item.displayValue)
     );
 
+    const displayValues = product.attributes.map((attribute) => attribute);
+    console.log(displayValues.map((attr) => attr));
     return (
       <Wrapper>
         <ProductDetailsImages
@@ -53,6 +55,7 @@ class ProductDescriptionPage extends Component {
         <ProductDescriptions
           productDetails={product}
           displaySizeValues={displaySizeValues}
+          displayValues={displayValues}
           attributeName={attributeName}
           productPrice={price}
           currentCurrency={currentCurrency}

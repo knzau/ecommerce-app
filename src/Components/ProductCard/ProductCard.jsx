@@ -10,20 +10,25 @@ import {
 import { currencyIcons } from "../Utils";
 import { productPrice } from "../../Redux/shop/shopUtils";
 
-import { openProductDetail } from "../../Redux/shop/shopActions";
+import {
+  openProductDetail,
+  setSelectProduct,
+} from "../../Redux/shop/shopActions";
 
 import { Wrapper } from "./ProductCardStyles";
 
 class ProductCard extends Component {
   render() {
     const { product, match, history, currentCurrency } = this.props;
+    console.log(currentCurrency);
     const price = productPrice(product, currentCurrency);
-    const currencySign = currencyIcons[`${currentCurrency.toUpperCase()}`];
+    const currencySign = currencyIcons[`${currentCurrency}`];
 
     return (
       <Wrapper
         onClick={() => {
           openProductDetail(product);
+          setSelectProduct(product);
           history.push({
             pathname: `${match.url}/${product.id}`,
             state: { product: product, price: price },
@@ -50,6 +55,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   openProductDetail: (product) => dispatch(openProductDetail(product)),
+  setSelectProduct: (product) => dispatch(setSelectProduct(product)),
 });
 
 export default withRouter(

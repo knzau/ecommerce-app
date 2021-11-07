@@ -18,3 +18,12 @@ export const removeItem = (item) => ({
   type: cartActionTypes.REMOVE_ITEM,
   payload: item,
 });
+
+export const addAttributeItem = (item) => ({
+  type: cartActionTypes.ADD_ATTR_ITEM,
+  payload: item,
+});
+
+export const toggleAttributeItem = () => ({
+  type: cartActionTypes.TOGGLE_ATTR_ITEM,
+});

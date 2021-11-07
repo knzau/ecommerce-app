@@ -22,7 +22,7 @@ class CartDropDown extends Component {
       toggleCartHidden,
       totalPrice,
       currentCurrency,
-    } = this.props;
+    } = this.props; 
 
     return (
       <Wrapper className="cart-dropdown">
@@ -47,7 +47,15 @@ class CartDropDown extends Component {
           <span className="total-price">{totalPrice}</span>
         </div>
         <div className="btns-wrapper">
-          <SmallButton className="view-cart_btn">View Bag</SmallButton>
+          <SmallButton
+            className="view-cart_btn"
+            onClick={() => {
+              history.push("/cart");
+              toggleCartHidden();
+            }}
+          >
+            View Bag
+          </SmallButton>
           <CustomButton
             onClick={() => {
               history.push("/cart");

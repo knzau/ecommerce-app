@@ -11,4 +11,8 @@ export const Wrapper = styled.div`
     margin-top: 8rem;
     margin-bottom: 6rem;
   }
+
+  .empty-message {
+    font-size: 2.8rem;
+  }
 `;

@@ -1,9 +1,17 @@
 import cartActionTypes from "./cartTypes.js";
-import { addItemToCart, removeItemFromCart } from "./cartUtils";
+import {
+  addItemToCart,
+  removeItemFromCart,
+  addAttribItemToCart,
+} from "./cartUtils";
 
 const INITIAL_STATE = {
   hidden: true,
   cartItems: [],
+  attribItems: {
+    items: [],
+    toggleAttribHidden: true,
+  },
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -16,7 +24,11 @@ const cartReducer = (state = INITIAL_STATE, action) => {
     case cartActionTypes.ADD_ITEM:
       return {
         ...state,
-        cartItems: addItemToCart(state.cartItems, action.payload),
+        cartItems: addItemToCart(
+          state.cartItems,
+          state.attribItems,
+          action.payload
+        ),
       };
     case cartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
@@ -29,6 +41,19 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: removeItemFromCart(state.cartItems, action.payload),
+      };
+    case cartActionTypes.ADD_ATTR_ITEM:
+      return {
+        ...state,
+        attribItems: addAttribItemToCart(
+          state.attribItems.items,
+          action.payload
+        ),
+      };
+    case cartActionTypes.TOGGLE_ATTR_ITEM:
+      return {
+        ...state,
+        toggleAttribHidden: !state.attribItems.toggleAttribHidden,
       };
     default:
       return state;

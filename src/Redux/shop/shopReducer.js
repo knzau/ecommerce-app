@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   currencies: [],
   productDetails: null,
   productPrice: "",
+  selectProduct: null,
   initialCategoryName: "",
   menuItemClicked: "",
 };
@@ -32,6 +33,11 @@ const shopReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         productDetails: action.payload,
+      };
+    case ShopActionTypes.SET_SELECT_PRODUCT:
+      return {
+        ...state,
+        selectProduct: action.payload,
       };
     default:
       return state;

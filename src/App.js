@@ -20,6 +20,7 @@ import {
   setCategorySlug,
 } from "./Redux/shop/shopActions";
 import { updateCurrencies } from "./Redux/currency/currencyActions";
+import { toggleCartHidden } from "./Redux/cart/cartActions";
 import { selectCartHidden } from "./Redux/cart/cartSelector";
 import { selectCurrencies } from "./Redux/currency/currencySelector";
 import {
@@ -32,7 +33,7 @@ import ShopPage from "./Pages/ShopPage/ShopPage";
 import LoadingSpinner from "./Components/LoadingSpinner/LoadingSpinner";
 
 //Global CSS Styles
-import GlobalStyles from "./GlobalStyles";
+import GlobalStyles, { GrayContainer } from "./GlobalStyles";
 import CartPage from "./Pages/CartPage/CartPage";
 
 const httpLink = new HttpLink({
@@ -84,7 +85,7 @@ class App extends React.Component {
 
   render() {
     const { isLoading, error } = this.state;
-    const { categories, hidden, currencies } = this.props;
+    const { categories, hidden, currencies, toggleCartHidden } = this.props;
 
     if (error) {
       return <p>Error! {error}</p>;
@@ -100,6 +101,7 @@ class App extends React.Component {
           hidden={hidden}
           currencies={currencies}
         />
+        {!hidden ? <GrayContainer onClick={() => toggleCartHidden()} /> : null}
         <Switch>
           <Redirect exact from="/" to="/shop" />
           <Route path="/shop" render={(props) => <ShopPage {...props} />} />
@@ -118,6 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(updateCurrencies(currenciesData)),
   setCategorySlug: (categoriesMap) => dispatch(setCategorySlug(categoriesMap)),
   selectCategoryMenu: (categoryName) => dispatch(setCategoryMenu(categoryName)),
+  toggleCartHidden: () => dispatch(toggleCartHidden()),
 });
 
 const mapStateToProps = (state) => ({

@@ -10,10 +10,6 @@ export const Wrapper = styled.div`
     margin-right: 3.8rem;
   }
 
-  .arrow-down {
-    margin-left: 1rem;
-    margin-bottom: 5px;
-  }
   select {
     background: var(--c-white);
     border: none;

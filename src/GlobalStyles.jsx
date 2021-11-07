@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -45,7 +45,8 @@ body {
   font-weight: 400;
   background-color: #ffffff;
   width: 100vw;
-   position: relative;
+  min-height: 100vh;
+  position: relative;
   overflow-x: hidden;
 
 }
@@ -91,4 +92,12 @@ export const medium_header = css`
   letter-spacing: 0em;
   text-align: left;
   text-transform: uppercase;
+`;
+
+export const GrayContainer = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(57, 55, 72, 0.22);
+  cursor: pointer;
 `;

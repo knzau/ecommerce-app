@@ -25,12 +25,10 @@ class ShopPage extends Component {
   }
 
   render() {
-    const { match, hidden, initialCategoryId } = this.props;
+    const { match, initialCategoryId } = this.props;
 
     return (
       <Wrapper>
-        {!hidden ? <div className="gray-container" /> : null}
-
         <Route
           exact
           path="/shop"

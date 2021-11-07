@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   position: absolute;
   width: 32.5rem;
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
   padding: 2rem;
@@ -10,7 +11,7 @@ export const Wrapper = styled.div`
   top: 8rem;
   right: 8.125%;
   z-index: 5;
-  overflow: hidden;
+  overflow-y: scroll;
   transition: all ease 0.3s;
 
   &:after {
@@ -52,7 +53,7 @@ export const Wrapper = styled.div`
   }
 
   .empty-message {
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     margin: 5rem auto;
   }
 

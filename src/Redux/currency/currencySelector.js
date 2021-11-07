@@ -10,7 +10,12 @@ export const selectCurrencies = createSelector(
 
 export const selectCurrentCurrency = createSelector(
   [selectCurrency],
-  (currency) => currency.selectedCurrency
+  (currency) => currency.selectedCurrency.substr(-3)
+);
+
+export const selectDropDownOpen = createSelector(
+  [selectCurrency],
+  (currency) => currency.isDropDownOpen
 );
 
 export const selectProductPrice = memoize((prices) =>

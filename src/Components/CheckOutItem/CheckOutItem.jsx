@@ -31,7 +31,8 @@ class CheckOutItem extends Component {
             {attrValues[0]?.map((itemAttr, index) => (
               <SmallButtonContainer
                 BigSquare
-                className="product-size"
+                className="color-box"
+                BackColor={itemAttr.value}
                 key={index}
               >
                 {itemAttr}

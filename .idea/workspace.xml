@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1c223b70-572e-4d24-979f-3fe06538d855" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/CartDropDown/CartDropDown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CartDropDown/CartDropDown.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/CartDropDown/CartDropDownStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CartDropDown/CartDropDownStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/CartICon/CartIconStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CartICon/CartIconStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/CartItem/CartItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CartItem/CartItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/CurrencySwitcher/CurrencySwitcher.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CurrencySwitcher/CurrencySwitcher.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/CurrencySwitcher/CurrencySwitcherStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CurrencySwitcher/CurrencySwitcherStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ProductCard/ProductCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ProductCard/ProductCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ProductDescriptions/ProductDescriptions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ProductDescriptions/ProductDescriptions.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ProductDescriptions/ProductDescriptionsStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ProductDescriptions/ProductDescriptionsStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/SmallButton/SmallButtonStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/SmallButton/SmallButtonStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GlobalStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/GlobalStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/CartPage/CartPageStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/CartPage/CartPageStyles.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/ProductDescriptionPage/ProductDescriptionPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/ProductDescriptionPage/ProductDescriptionPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/ShopPage/ShopPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/ShopPage/ShopPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/cart/cartActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/cart/cartActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/cart/cartReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/cart/cartReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/cart/cartSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/cart/cartSelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/cart/cartTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/cart/cartTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/cart/cartUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/cart/cartUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/currency/currencyActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/currency/currencyActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/currency/currencyReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/currency/currencyReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/currency/currencySelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/currency/currencySelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/currency/currencyTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/currency/currencyTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/shop/shopActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/shop/shopActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/shop/shopReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/shop/shopReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/shop/shopTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/shop/shopTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Redux/shop/shopUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/shop/shopUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/svgs/ArrowDown.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/svgs/ArrowDown.svg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1zTF9B3grnoxgxGok0agn7Ep6ub" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1c223b70-572e-4d24-979f-3fe06538d855" name="Changes" comment="" />
+      <created>1634164016518</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1634164016518</updated>
+      <workItem from="1634164019010" duration="138000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

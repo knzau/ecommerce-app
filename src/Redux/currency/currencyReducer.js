@@ -3,6 +3,7 @@ import CurrencyActionTypes from "./currencyTypes";
 const INITIAL_STATE = {
   currencies: [],
   selectedCurrency: "USD",
+  isDropDownOpen: false,
 };
 
 const currencyReducer = (state = INITIAL_STATE, action) => {
@@ -16,6 +17,11 @@ const currencyReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         selectedCurrency: action.payload,
+      };
+    case CurrencyActionTypes.SET_DROPDOWN_OPEN:
+      return {
+        ...state,
+        isDropDownOpen: !state.isDropDownOpen,
       };
     default:
       return state;

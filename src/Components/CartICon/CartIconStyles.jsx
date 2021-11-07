@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   position: relative;
   cursor: pointer;
   display: flex;
+  justify-content: center;
   height: 3rem;
 
   .shopping-icon {
@@ -42,10 +43,9 @@ export const Wrapper = styled.div`
 export const IconWrapper = styled.div`
   position: relative;
   cursor: pointer;
-  justify-content: flex-end;
+  justify-content: center;
   display: flex;
   align-items: center;
-  margin-left: 2.2rem;
 
   .arrow-down {
     margin-left: 1rem;
