@@ -22,7 +22,7 @@ class ProductDetailsImages extends Component {
               onMouseOver={(e) => handleOnHover(e, index)}
               onMouseOut={(e) => handleOnMouseLeave(e, index)}
             >
-              <img src={item} alt="products" />
+              <img src={item ? item : ""} alt="products" />
             </div>
           ))}
         </div>

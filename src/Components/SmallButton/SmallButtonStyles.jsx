@@ -15,7 +15,11 @@ const BigSquareStyles = css`
   width: 6.3rem;
   height: 4.5rem;
   background-color: ${(props) => (props.BackColor ? props.BackColor : "white")};
-  color: ${(props) => (props.BackColor === "#000000" ? "white" : "gray")};
+  color: ${(props) => (props.BackColor === "black" ? "white" : "black")};
+  &:not(:last-child) {
+    margin-right: 10px;
+    margin-bottom: 3px;
+  }
 
   &:hover {
     background-color: var(--c-primary-dark);
@@ -27,9 +31,16 @@ const BigSquareStyles = css`
 const SmallSquareStyles = css`
   width: 2.4rem;
   height: 2.4rem;
+  background-color: ${(props) => (props.ItemColor ? props.ItemColor : "White")};
+
+  &:not(:last-child) {
+    margin-right: 3px;
+    margin-bottom: 3px;
+  }
 
   &:hover {
     cursor: pointer;
+    background-color: black;
   }
 `;
 
@@ -56,6 +67,8 @@ const getButtonStyles = (props) => {
   } else if (props.SmallSquare) {
     return SmallSquareStyles;
   } else if (props.BackColor) {
+    return ColorStyles;
+  } else if (props.ItemColor) {
     return ColorStyles;
   }
 };

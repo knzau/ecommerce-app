@@ -8,6 +8,15 @@ export const currencyIcons = {
 };
 
 export const displayAttrValues = (product) =>
-  product.attributes.map((attribute) =>
-    attribute.items.map((item) => item).map((item) => item.displayValue)
+  product.attributes.map((attribute) => attribute.displayValue);
+
+export const arraysMatch = function (a, b) {
+  a.sort();
+  b.sort();
+  return (
+    Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length === b.length &&
+    a.every((val, index) => val === b[index])
   );
+};

@@ -12,7 +12,15 @@ export const Wrapper = styled.div`
   .product__img-wrapper {
     width: 354px;
     height: 330px;
+    position: relative;
 
+    .product__stock-status {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      font-size: 3.2rem;
+    }
     .product-img {
       width: 354px;
       height: 330px;

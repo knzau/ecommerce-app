@@ -25,8 +25,28 @@ const invertedButtonStyles = css`
   }
 `;
 
+const WarnStyles = css`
+  background-color: #ffa500;
+  color: #ffffff;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    cursor: pointer;
+  }
+`;
+
 const getButtonStyles = (props) => {
-  return props.inverted ? invertedButtonStyles : buttonStyles;
+  if (props.inverted) {
+    return invertedButtonStyles;
+  } else if (props.warning) {
+    return WarnStyles;
+  } else {
+    return buttonStyles;
+  }
 };
 
 export const CustomButtonContainer = styled.button`
@@ -36,7 +56,7 @@ export const CustomButtonContainer = styled.button`
   letter-spacing: 2px;
   line-height: 1.92rem;
   padding: 0 1.5rem 0 1.5rem;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 600;
   text-transform: uppercase;
   font-weight: bolder;

@@ -27,6 +27,7 @@ class ProductDescriptionPage extends Component {
     const price = productPrice(product, currentCurrency);
 
     const attributeName = product.attributes.map((attribute) => attribute.name);
+    console.log(product.attributes);
 
     const handleOnHover = (e, index) => {
       const targetImageUrl = product.gallery[index];
@@ -42,7 +43,11 @@ class ProductDescriptionPage extends Component {
     );
 
     const displayValues = product.attributes.map((attribute) => attribute);
-    console.log(displayValues.map((attr) => attr));
+
+    const defaultTypes = attributeName.map((type) => {
+      return { name: type, item: {} };
+    });
+
     return (
       <Wrapper>
         <ProductDetailsImages
@@ -60,6 +65,7 @@ class ProductDescriptionPage extends Component {
           productPrice={price}
           currentCurrency={currentCurrency}
           currencySign={currencySign}
+          defaultTypes={defaultTypes}
         />
       </Wrapper>
     );

@@ -7,11 +7,10 @@ import {
 
 const INITIAL_STATE = {
   hidden: true,
+  selectedAttr: [],
   cartItems: [],
-  attribItems: {
-    items: [],
-    toggleAttribHidden: true,
-  },
+  attribItems: [],
+  toggleAttribHidden: true,
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -24,11 +23,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
     case cartActionTypes.ADD_ITEM:
       return {
         ...state,
-        cartItems: addItemToCart(
-          state.cartItems,
-          state.attribItems,
-          action.payload
-        ),
+        cartItems: addItemToCart(state.cartItems, action.payload),
       };
     case cartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
@@ -45,15 +40,12 @@ const cartReducer = (state = INITIAL_STATE, action) => {
     case cartActionTypes.ADD_ATTR_ITEM:
       return {
         ...state,
-        attribItems: addAttribItemToCart(
-          state.attribItems.items,
-          action.payload
-        ),
+        selectedAttr: addAttribItemToCart(state.selectedAttr, action.payload),
       };
     case cartActionTypes.TOGGLE_ATTR_ITEM:
       return {
         ...state,
-        toggleAttribHidden: !state.attribItems.toggleAttribHidden,
+        toggleAttribHidden: !state.toggleAttribHidden,
       };
     default:
       return state;

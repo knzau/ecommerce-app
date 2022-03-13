@@ -23,20 +23,30 @@ class ProductCard extends Component {
     console.log(currentCurrency);
     const price = productPrice(product, currentCurrency);
     const currencySign = currencyIcons[`${currentCurrency}`];
-
+    console.log(product.inStock);
+    const stockStatus = product.inStock;
     return (
       <Wrapper
         onClick={() => {
           openProductDetail(product);
           setSelectProduct(product);
-          history.push({
-            pathname: `${match.url}/${product.id}`,
-            state: { product: product, price: price },
-          });
+          stockStatus &&
+            history.push({
+              pathname: `${match.url}/${product.id}`,
+              state: { product: product, price: price },
+            });
         }}
       >
         <div className="product__img-wrapper">
-          <img src={product.gallery[0]} className="product-img" alt="product" />
+          {!stockStatus && (
+            <span className="product__stock-status">out of stock</span>
+          )}
+          <img
+            src={product.gallery[0]}
+            className="product-img"
+            alt="product"
+            style={{ opacity: !stockStatus ? `${0.5}` : `${1}` }}
+          />
           <span className="background"></span>
         </div>
         <p className="product__name">{product.name}</p>

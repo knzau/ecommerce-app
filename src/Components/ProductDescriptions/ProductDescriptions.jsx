@@ -1,22 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
-import {
-  addAttributeItem,
-  addItem,
-  toggleAttributeItem,
-} from "../../Redux/cart/cartActions";
+import { addItem } from "../../Redux/cart/cartActions";
 import Attributes from "../Attributes/Attributes";
 import {
   selectCartItems,
   selectAttribItems,
   selectToggleAttribHidden,
 } from "../../Redux/cart/cartSelector";
-
 import CustomButton from "../CustomButton/CustomButton";
 import { DescriptionContainer } from "./ProductDescriptionsStyles";
 
 class ProductDescriptions extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      attributeTypes: this.props.defaultTypes,
+      warning: false,
+      cartClicked: false,
+      success: false,
+    };
+  }
+
   render() {
     const {
       productDetails,
@@ -24,19 +30,48 @@ class ProductDescriptions extends Component {
       currencySign,
       addItem,
       displayValues,
-      addAttributeItem,
-      cartAttribItems,
-      toggleAttributeItem,
-      selectToggleAttribHidden,
+      defaultTypes,
     } = this.props;
 
+    const { success, warning, attributeItem, attributeTypes } = this.state;
+
+    const isTypesSelected = attributeTypes.every(
+      (eachType) => Object.keys(eachType.item).length > 0
+    );
+
     const handleAddToCart = () => {
-      if (!cartAttribItems) {
-        return alert("Select Product Attributes");
+      this.setState({ warning: false, success: false });
+
+      if (isTypesSelected === true) {
+        const selectedProduct = {
+          ...productDetails,
+          attributes: attributeTypes,
+        };
+        addItem(selectedProduct);
+        this.setState({ success: true, attributeTypes: defaultTypes });
       } else {
-        return addItem(productDetails);
+        this.setState({ warning: true });
       }
     };
+
+    const addNewAttribItem = (newItem) => (selectedType) => {
+      this.setState((prevState) => ({
+        attributeTypes: prevState.attributeTypes.map((eachItem) =>
+          eachItem.name === selectedType.id
+            ? {
+                ...eachItem,
+                item: eachItem.item.id === newItem.id ? {} : newItem,
+              }
+            : eachItem
+        ),
+        warning: false,
+        success: false,
+      }));
+    };
+
+    const selectTypesLabel = `Please select ${attributeTypes
+      .map((eachType) => eachType.name)
+      .join(" , ")}`;
 
     return (
       <DescriptionContainer>
@@ -45,9 +80,11 @@ class ProductDescriptions extends Component {
 
         <Attributes
           displayValues={displayValues}
-          addAttributeItem={addAttributeItem}
-          selectToggleAttribHidden={selectToggleAttribHidden}
-          toggleAttributeItem={toggleAttributeItem}
+          handleAttribute={addNewAttribItem}
+          success={success}
+          warning={warning}
+          attributeItem={attributeItem}
+          selectedAttributes={attributeTypes}
         />
 
         <p className="medium_header-price">Price: </p>
@@ -55,8 +92,12 @@ class ProductDescriptions extends Component {
           {parse(`${currencySign}`)} {productPrice}
         </h4>
 
-        <CustomButton onClick={() => handleAddToCart()}>
-          Add to cart
+        <CustomButton onClick={() => handleAddToCart()} warning={warning}>
+          {!success && !warning
+            ? "Add to cart"
+            : success
+            ? "Added Product To Cart"
+            : selectTypesLabel}
         </CustomButton>
 
         <div className="product-description">
@@ -75,8 +116,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
-  toggleAttributeItem: () => dispatch(toggleAttributeItem()),
-  addAttributeItem: (item) => dispatch(addAttributeItem(item)),
 });
 
 export default connect(

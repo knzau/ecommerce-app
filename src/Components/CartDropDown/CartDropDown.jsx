@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CustomButton from "../CustomButton/CustomButton";
 import CartItem from "../CartItem/CartItem";
+import Parse from "html-react-parser";
 import { withRouter } from "react-router-dom";
 import {
   selectCartItemsCount,
@@ -9,7 +10,7 @@ import {
 import { connect } from "react-redux";
 import { selectCartItems } from "../../Redux/cart/cartSelector";
 import { toggleCartHidden } from "../../Redux/cart/cartActions";
-
+import { currencyIcons } from "../Utils";
 import { Wrapper } from "./CartDropDownStyles";
 import SmallButton from "../SmallButton/SmallButton";
 
@@ -22,8 +23,8 @@ class CartDropDown extends Component {
       toggleCartHidden,
       totalPrice,
       currentCurrency,
-    } = this.props; 
-
+    } = this.props;
+    console.log(currentCurrency);
     return (
       <Wrapper className="cart-dropdown">
         <h3 className="total-items">
@@ -44,7 +45,9 @@ class CartDropDown extends Component {
         </div>
         <div className="total-price_wrapper">
           <span className="medium-header">Total</span>
-          <span className="total-price">{totalPrice}</span>
+          <span className="total-price">
+            {Parse(currencyIcons[currentCurrency])}&nbsp;{totalPrice}
+          </span>
         </div>
         <div className="btns-wrapper">
           <SmallButton

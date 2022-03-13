@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   position: absolute;
   width: 32.5rem;
-  max-height: 80vh;
+  max-height: 54rem;
   display: flex;
   flex-direction: column;
   padding: 2rem;
@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   top: 8rem;
   right: 8.125%;
   z-index: 5;
-  overflow-y: scroll;
+  overflow-y: auto;
   transition: all ease 0.3s;
 
   &:after {

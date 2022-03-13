@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   .right_wrapper {
     width: 50%;
     display: flex;
+    margin-right: 1.2rem;
     flex-direction: column;
 
     & span {
@@ -24,6 +25,7 @@ export const Wrapper = styled.div`
   }
   .left_wrapper {
     width: 50%;
+
     display: flex;
   }
 
@@ -41,8 +43,25 @@ export const Wrapper = styled.div`
     }
   }
 
+  .attributes-main__container {
+    margin-top: 1.7rem;
+  }
+  .cart-attributes-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
   .cartDownBtn {
-    margin-top: 0;
+    margin-top: 1rem;
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 2.4rem;
+      height: 2.4rem;
+      font-size: 1.4rem;
+      padding: 4px;
+    }
   }
 
   .image-wrap {
